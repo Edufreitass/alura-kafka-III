@@ -34,6 +34,8 @@ public class NewOrderServlet extends HttpServlet {
             var email = req.getParameter("email");
             var amount = new BigDecimal(req.getParameter("amount"));
 
+            // http://localhost:8080/new?email=eduardo@gmail.com&amount=2549.00
+
             var orderId = UUID.randomUUID().toString();
 
             var order = new Order(orderId, amount, email);
@@ -46,12 +48,9 @@ public class NewOrderServlet extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.getWriter().println("New order sent");
 
-        } catch (ExecutionException e) {
-            throw new ServletException(e);
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             throw new ServletException(e);
         }
-
 
     }
 }

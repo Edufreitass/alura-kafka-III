@@ -26,8 +26,9 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "orderId='" + orderId + '\'' +
-                ", amount=" + amount +
+                ", amount=" + String.format("%.2f", amount) +
                 ", email='" + email + '\'' +
                 '}';
     }
+
 }
