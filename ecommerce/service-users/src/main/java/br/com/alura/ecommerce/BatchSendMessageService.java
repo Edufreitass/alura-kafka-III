@@ -15,7 +15,7 @@ public class BatchSendMessageService {
     private final Connection connection;
 
     BatchSendMessageService() throws SQLException {
-        String url = "jdbc:sqlite:target/users_database.db";
+        String url = "jdbc:sqlite:service-users/target/users_database.db";
         connection = DriverManager.getConnection(url);
         try {
             connection.createStatement().execute("create table Users (" +
@@ -45,18 +45,17 @@ public class BatchSendMessageService {
         System.out.println("Processing new batch");
         System.out.println("Topic: " + record.value());
 
-        for (User user : getAllUsers()) {
+        for(User user : getAllUsers()) {
             userDispatcher.send(record.value(), user.getUuid(), user);
         }
     }
 
     private List<User> getAllUsers() throws SQLException {
-        var results = connection.prepareStatement("SELECT uuid FROM users").executeQuery();
+        var results = connection.prepareStatement("select uuid from Users").executeQuery();
         List<User> users = new ArrayList<>();
-        while (results.next()) {
+        while(results.next()) {
             users.add(new User(results.getString(1)));
         }
         return users;
     }
-
 }

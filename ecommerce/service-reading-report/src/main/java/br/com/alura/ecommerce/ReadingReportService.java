@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class ReadingReportService {
 
-    private static final Path SOURCE = new File("src/main/resources").toPath();
+    private static final Path SOURCE = new File("src/main/resources/report.txt").toPath();
 
     public static void main(String[] args) {
         var reportService = new ReadingReportService();
@@ -24,14 +24,14 @@ public class ReadingReportService {
 
     private void parse(ConsumerRecord<String, User> record) throws IOException {
         System.out.println("------------------------------------------");
-        System.out.println("Processing report for  " + record.value());
+        System.out.println("Processing report for " + record.value());
 
         var user = record.value();
         var target = new File(user.getReportPath());
         IO.copyTo(SOURCE, target);
         IO.append(target, "Created for " + user.getUuid());
 
-        System.out.println("File created " + target.getAbsolutePath());
+        System.out.println("File created: " + target.getAbsolutePath());
 
     }
 
